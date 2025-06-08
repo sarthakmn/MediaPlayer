@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(HMI)
 
-set(SOURCE 
-    decoder.cpp
+set(SOURCE
     hmi.cpp
 )
 set(HEADER 
