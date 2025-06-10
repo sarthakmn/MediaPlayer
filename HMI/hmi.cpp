@@ -1,8 +1,7 @@
 #include "hmi.h"
 
-void hmi::input(void){
-    AudioState State;
-    
+void hmi::input(AudioState *State) {
+    // Start the HMI input loop
     int choice;
     cout << "************ Media Player ************" << endl;
     while(1){
@@ -12,10 +11,10 @@ void hmi::input(void){
         cin >> choice;
         switch(choice){
             case 1:
-                State.setState(Playing);
+                State->setState(Playing);
                 break;
             case 2:
-                State.setState(Paused);
+                State->setState(Paused);
                 break;
             default:
                 cout << "Invalid choice, please try again." << endl;

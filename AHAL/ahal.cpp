@@ -30,6 +30,11 @@ void ahal::alsa_write() {
     }
 }
 
+void ahal::alsa_pause(int enable) {
+    if (enable) snd_pcm_pause(handle, 1);  
+    else snd_pcm_pause(handle, 0);
+}
+
 void ahal::alsa_read(void) {
     // TODO
 }

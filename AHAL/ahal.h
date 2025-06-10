@@ -19,5 +19,6 @@ class ahal {
     public:
         int alsa_init();
         void alsa_write();
-        void alsa_read(void);
+        void alsa_read();
+        void alsa_pause(int);
 };

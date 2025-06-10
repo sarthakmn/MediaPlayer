@@ -6,13 +6,24 @@
 #include "hmi.h"
 
 using namespace std;
- 
+
 int main(void){
-    thread hmiThread(hmi::input);
-    AudioManager audioManager;
-    audioManager.init();
+    AudioState *st = new AudioState();
+    AudioManager *am = new AudioManager(st);
+    
+    am->init();
+
+    thread hmiThread(hmi::input,st);
+    
     while(1){
-        audioManager.play();
+        switch (st->getState())  
+        {
+        case Playing:
+            am->play();
+            break;
+        default:
+            break;
+        }
     }
     hmiThread.join();
     return 0;

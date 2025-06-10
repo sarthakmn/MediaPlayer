@@ -8,9 +8,8 @@ void AudioManager::play(void){
     ahal::alsa_write();
 }
 
-void AudioManager::pause(void){
-    // TODO
-    cout << "Pause" << endl;
+void AudioManager::pause(int enable){
+    ahal::alsa_pause(enable);
 }
 
 void AudioManager::next(void){

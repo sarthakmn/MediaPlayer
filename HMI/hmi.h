@@ -48,5 +48,5 @@ class AudioState {
 
 class hmi : public AudioState {
     public:
-        static void input(void);
+        static void input(AudioState *);
 };
