@@ -35,10 +35,14 @@ void ahal::alsa_pause(int enable) {
     }
 }
 
-void ahal::alsa_deinit() {
-    if (handle) {
-        snd_pcm_drain(handle);
-        snd_pcm_close(handle);
-        handle = nullptr;
-    }
+void ahal::alsa_drop() {
+    // Drop the current PCM data immediately
+    snd_pcm_drop(handle);
+}
+
+ahal::~ahal() {
+    snd_pcm_drain(handle);
+    snd_pcm_close(handle);
+    handle = nullptr;
+    cout << "AHAL destructor called" << endl;
 }

@@ -6,6 +6,10 @@ int AudioManager::cur_song = 1;
 void AudioManager::init(void){
     songs = Fparser->get_song_list();
     Ahal->alsa_init();
+    if(songs.empty()) {
+        cerr << "No songs found" << endl;
+        return;
+    }
     Adecoder->init(songs[cur_song]);
 }
 
@@ -23,11 +27,21 @@ void AudioManager::pause(int enable){
 }
 
 void AudioManager::next(void){
-    // TODO
-    cout << "Next" << endl;
+    cur_song++;
+    if (cur_song > songs.size()) {
+        cur_song = 1; // Loop back to the first song
+    }
+    Adecoder = make_unique<AudioDecoder>();
+    Adecoder->init(songs[cur_song]);
+    state->setState(Playing);
 }
 
 void AudioManager::previous(void){
-    // TODO
-    cout << "Previous" << endl;
+    cur_song--;
+    if (cur_song < 1) {
+        cur_song = songs.size(); // Loop back to the last song
+    }
+    Adecoder = make_unique<AudioDecoder>();
+    Adecoder->init(songs[cur_song]);
+    state->setState(Playing);
 }

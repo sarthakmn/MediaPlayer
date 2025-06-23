@@ -17,12 +17,10 @@ class ahal {
 
     public:
         int alsa_init();
-        void alsa_deinit();
+        void alsa_drop();
         void alsa_write(uint8_t* buffer,int nb_samples);
         void alsa_read();
         void alsa_pause(int);
-        ~ahal(){
-            cout << "AHAL destructor" << endl;
-        }
+        ~ahal();
 
 };

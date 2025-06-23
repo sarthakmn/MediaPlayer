@@ -35,7 +35,10 @@ class AudioManager : public IAudioManager, public AudioState, public ahal{
 
             // Register state change callbacks
             st->onEnter(Playing, [this]() { this->pause(0); });
+            st->onExit(Playing, [this]() { this->pause(1); });
             st->onEnter(Paused,  [this]() { this->pause(1); });
+            st->onEnter(Next,    [this]() { Ahal->alsa_drop(); });
+            st->onEnter(Prev,    [this]() { Ahal->alsa_drop(); });
         }
         void init(void) override;
         void play(void) override;
