@@ -14,6 +14,12 @@ void AudioManager::init(void){
 }
 
 void AudioManager::play(void){
+    if(Adecoder->getNextFrame(&pcm_data, data_size, nb_samples) == false) {
+        // If no frame is available (EOS), set the state to Next
+        state->setState(Next);
+        Ahal->alsa_drain();
+        return;
+    }
     while (Adecoder->getNextFrame(&pcm_data, data_size, nb_samples)) {
         if(state->getState() != Playing){
             return;

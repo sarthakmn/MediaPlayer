@@ -40,6 +40,11 @@ void ahal::alsa_drop() {
     snd_pcm_drop(handle);
 }
 
+void ahal::alsa_drain() {
+    // Drain or flush audio gracefully the PCM device to ensure all data is played before closing
+    snd_pcm_drain(handle);
+}
+
 ahal::~ahal() {
     snd_pcm_drain(handle);
     snd_pcm_close(handle);

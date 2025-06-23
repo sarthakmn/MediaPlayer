@@ -18,6 +18,7 @@ class ahal {
     public:
         int alsa_init();
         void alsa_drop();
+        void alsa_drain();
         void alsa_write(uint8_t* buffer,int nb_samples);
         void alsa_read();
         void alsa_pause(int);
