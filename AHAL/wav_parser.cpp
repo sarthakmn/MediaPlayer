@@ -1,7 +1,7 @@
 #include "wav_parser.h"
 
 FILE* wav_parser(void) {
-    FILE* fp = fopen("../metaData/songs/sanamterikasam.wav", "rb");
+    FILE* fp = fopen("../metaData/songs/sochnasake.wav", "rb");
     if (!fp) {
         perror("Error opening WAV file");
         return nullptr;

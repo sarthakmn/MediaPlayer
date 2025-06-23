@@ -1,11 +1,11 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.22.1)
 project(AHAL)
 set(HEADER
-    wav_parser.h
+#    wav_parser.h
     ahal.h
 )
 set(SOURCE
-    wav_parser.cpp
+#    wav_parser.cpp
     ahal.cpp
 )
 add_library(AHAL ${HEADER} ${SOURCE})

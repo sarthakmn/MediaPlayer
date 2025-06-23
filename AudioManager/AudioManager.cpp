@@ -1,15 +1,25 @@
 #include "AudioManager.h"
+#include <map>
+
+int AudioManager::cur_song = 1;
 
 void AudioManager::init(void){
-    ahal::alsa_init();
+    songs = Fparser->get_song_list();
+    Ahal->alsa_init();
+    Adecoder->init(songs[cur_song]);
 }
 
 void AudioManager::play(void){
-    ahal::alsa_write();
+    while (Adecoder->getNextFrame(&pcm_data, data_size, nb_samples)) {
+        if(state->getState() != Playing){
+            return;
+        }
+        Ahal->alsa_write(pcm_data,nb_samples);
+    }
 }
 
 void AudioManager::pause(int enable){
-    ahal::alsa_pause(enable);
+    Ahal->alsa_pause(enable);
 }
 
 void AudioManager::next(void){

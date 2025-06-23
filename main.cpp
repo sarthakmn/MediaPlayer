@@ -18,8 +18,17 @@ int main(void){
     while(1){
         switch (st->getState())  
         {
-        case Playing:
+        case Playing :
             am->play();
+            break;
+        case Paused :
+            am->pause(1);
+            break;
+        case Next :
+            am->next();
+            break;
+        case Prev :
+            am->previous();
             break;
         default:
             break;

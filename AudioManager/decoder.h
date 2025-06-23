@@ -1,5 +1,9 @@
 #pragma once
 
+#include <map>
+#include <filesystem>
+#include <string>
+
 extern "C" {
 #include <libavformat/avformat.h>
 #include <libavcodec/avcodec.h>
@@ -10,14 +14,23 @@ extern "C" {
 
 #include "../AHAL/ahal.h"
 
-class AudioDecoder : public ahal {
-    const char* filename;
-    public:
-        ~AudioDecoder();
-        void init_decoder();
-        bool getNextFrame(uint8_t** output, int& data_size, int& nb_samples);
-        int getSampleRate() const;
-        int getChannels() const;
+class fileParser {
+    map<int, string> files;
+    public :
+        map<int, string> get_song_list(void);
+};
+
+using namespace std;
+
+class AudioDecoder {
+public:
+    AudioDecoder();
+    ~AudioDecoder();
+
+    bool init(const std::string& filename);
+    bool getNextFrame(uint8_t** output, int& data_size, int& nb_samples);
+    int getSampleRate() const;
+    int getChannels() const;
 
 private:
     AVFormatContext* fmt_ctx = nullptr;

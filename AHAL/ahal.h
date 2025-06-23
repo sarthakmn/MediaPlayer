@@ -11,14 +11,18 @@ using namespace std;
 
 class ahal {
     int err = 0;
-    snd_pcm_t *handle;
-    int16_t *buffer = (int16_t *)calloc(bufferSize, 1);
+    snd_pcm_t *handle = nullptr;
     size_t frame_bytes = 0;
     size_t frames = 0;
 
     public:
         int alsa_init();
-        void alsa_write();
+        void alsa_deinit();
+        void alsa_write(uint8_t* buffer,int nb_samples);
         void alsa_read();
         void alsa_pause(int);
+        ~ahal(){
+            cout << "AHAL destructor" << endl;
+        }
+
 };
