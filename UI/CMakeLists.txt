@@ -11,5 +11,5 @@ add_executable(MediaPlayerControls
     mediacontrols.cpp
     mediacontrols.h
 )
-target_include_directories(MediaPlayerControls PRIVATE target_include_directories(MediaPlayerControls PRIVATE ${CMAKE_SOURCE_DIR}/../devghev/include))
-target_link_libraries(MediaPlayerControls PRIVATE Qt5::Widgets ${CMAKE_SOURCE_DIR}/../devghev/build/libdevghev.so pthread)
+target_include_directories(MediaPlayerControls PRIVATE target_include_directories(MediaPlayerControls PRIVATE /usr/local/include/))
+target_link_libraries(MediaPlayerControls PRIVATE Qt5::Widgets /usr/local/lib/libdevghev.so pthread)

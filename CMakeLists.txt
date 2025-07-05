@@ -8,7 +8,7 @@ add_subdirectory(AudioManager)
 add_subdirectory(AHAL)
 
 add_executable(player main.cpp)
-target_include_directories(player PRIVATE ${CMAKE_SOURCE_DIR}/devghev/include)
+target_include_directories(player PRIVATE /usr/local/include/)
 target_link_libraries(player HMI AudioManager AHAL 
     m 
     asound 
@@ -17,5 +17,6 @@ target_link_libraries(player HMI AudioManager AHAL
     avutil
     swresample
     pthread
-    ${CMAKE_SOURCE_DIR}/devghev/build/libdevghev.so
+    /usr/local/lib/libdevghev.so
+    /usr/local/lib/libmedia.so
 )

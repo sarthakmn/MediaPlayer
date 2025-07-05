@@ -21,7 +21,7 @@ int ahal::alsa_init() {
 void ahal::alsa_write(uint8_t* buffer,int nb_samples) {
     err = snd_pcm_writei(handle, buffer, nb_samples);
     if (err < 0) {
-        cerr << "Error writing to PCM device: " << snd_strerror(err) << endl;
+        // cerr << "Error writing to PCM device: " << snd_strerror(err) << endl;
         snd_pcm_prepare(handle);  
     }
 }
