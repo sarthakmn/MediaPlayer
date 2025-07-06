@@ -1,8 +1,11 @@
 #pragma once
 
 #include <decoder.h>
+#include <audio.h>
 #include "../../AHAL/include/ahal.h"
 #include "StateMachine.h"
+#include "devghevClient.h"
+
 using namespace std;
 
 class IAudioManager {
@@ -25,7 +28,9 @@ class AudioManager : public IAudioManager, public AudioState, public ahal{
     int nb_samples;
     static int cur_song;
     AudioState *state;
-
+    AMDevghevClient devghevClient;
+    AudioNetworkClient audioClient;
+    
     public:
         AudioManager(AudioState *st) {
             state = st;
@@ -35,8 +40,8 @@ class AudioManager : public IAudioManager, public AudioState, public ahal{
             st->onEnter(Playing, [this]() { this->pause(0); });
             st->onExit(Playing, [this]() { this->pause(1); });
             st->onEnter(Paused,  [this]() { this->pause(1); });
-            st->onEnter(Next,    [this]() { Ahal->alsa_drop(); });
-            st->onEnter(Prev,    [this]() { Ahal->alsa_drop(); });
+            //st->onEnter(Next,    [this]() { devghevClient.sendCommand("alsa_drop"); });
+            //st->onEnter(Prev,    [this]() { devghevClient.sendCommand("alsa_drop"); });
         }
         void init(void) override;
         void play(void) override;

@@ -1,11 +1,16 @@
-#include "AudioManager.h"
 #include <map>
+
+#include "AudioManager.h"
 
 int AudioManager::cur_song = 1;
 
 void AudioManager::init(void){
+    devghevClient.sendCommand("alsa_init");
+    cout << "AudioManager initialized." << endl;
+    audioClient.init("127.0.0.1", 5000, 12345);
+    audioClient.connect();
     songs = Fparser->get_song_list();
-    Ahal->alsa_init();
+    //Ahal->alsa_init();
     if(songs.empty()) {
         cerr << "No songs found" << endl;
         return;
@@ -17,19 +22,27 @@ void AudioManager::play(void){
     if(Adecoder->getNextFrame(&pcm_data, data_size, nb_samples) == false) {
         // If no frame is available (EOS), set the state to Next
         state->setState(Next);
-        Ahal->alsa_drain();
+        devghevClient.sendCommand("alsa_drain");
+        //Ahal->alsa_drain();
         return;
     }
     while (Adecoder->getNextFrame(&pcm_data, data_size, nb_samples)) {
         if(state->getState() != Playing){
             return;
         }
-        Ahal->alsa_write(pcm_data,nb_samples);
+        //devghevClient.sendCommand("alsa_write");
+        audioClient.send(reinterpret_cast<char*>(pcm_data), data_size);
+        //Ahal->alsa_write(pcm_data,nb_samples);
     }
 }
 
 void AudioManager::pause(int enable){
-    Ahal->alsa_pause(enable);
+    if (enable) {
+        devghevClient.sendCommand("alsa_pause", "1");
+    } else {
+        devghevClient.sendCommand("alsa_pause", "0");
+    }
+    //Ahal->alsa_pause(enable);
 }
 
 void AudioManager::next(void){

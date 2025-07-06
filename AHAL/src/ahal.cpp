@@ -1,4 +1,4 @@
-#include "include/ahal.h"
+#include "ahal.h"
 
 int ahal::alsa_init() {
     err = snd_pcm_open(&handle, "default", SND_PCM_STREAM_PLAYBACK, 0);
@@ -18,13 +18,21 @@ int ahal::alsa_init() {
     return 0;
 }
 
-void ahal::alsa_write(uint8_t* buffer,int nb_samples) {
-    err = snd_pcm_writei(handle, buffer, nb_samples);
-    if (err < 0) {
-        // cerr << "Error writing to PCM device: " << snd_strerror(err) << endl;
-        snd_pcm_prepare(handle);  
+void ahal::alsa_write(uint8_t* buffer, int nb_samples) {
+    if (!handle) {
+        std::cerr << "[ALSA] handle is NULL\n";
+        return;
+    }
+
+    snd_pcm_sframes_t frames = snd_pcm_writei(handle, buffer, nb_samples);
+    if (frames < 0) {
+        std::cerr << "[ALSA] write failed: " << snd_strerror(frames) << std::endl;
+        snd_pcm_prepare(handle);  // recover
+    } else {
+        std::cout << "[ALSA] wrote " << frames << " frames\n";
     }
 }
+
 
 void ahal::alsa_pause(int enable) {
     if (enable) {

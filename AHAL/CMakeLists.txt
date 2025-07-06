@@ -1,12 +1,33 @@
-cmake_minimum_required(VERSION 3.22.1)
-project(AHAL)
-
-set(SOURCE
-#    src/wav_parser.cpp
+set(SOURCES
     src/ahal.cpp
 )
-add_library(AHAL ${HEADER} ${SOURCE})
-target_include_directories(AHAL PUBLIC
-    ${CMAKE_SOURCE_DIR}/include
+
+set(HEADERS
+    include/ahal.h
 )
-target_include_directories(AHAL PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_library(AHALlib STATIC ${SOURCES} ${HEADERS})
+target_include_directories(AHALlib PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    /usr/local/include/
+)
+
+# Now only main.cpp goes into pfAHAL
+add_executable(pfAHAL main.cpp)
+
+target_include_directories(pfAHAL PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    /usr/local/include
+)
+
+target_link_libraries(pfAHAL
+    AHALlib
+    devghev
+    audio
+    m
+    pthread
+    asound
+)
+
+# Install to /usr/bin
+install(TARGETS pfAHAL RUNTIME DESTINATION /usr/bin)

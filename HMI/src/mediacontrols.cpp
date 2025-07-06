@@ -62,5 +62,3 @@ void MediaControls::previous() {
     qDebug() << "⏮ Previous clicked";
     sendCommand("prev");
 }
-// Add similar slots for volume up/down if needed
-// ...existing code...

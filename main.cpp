@@ -8,7 +8,12 @@ int main() {
     }).detach();
 
     // Launch AudioManager service
-    std::system("/usr/bin/pfAudioManager");
+    std::thread([](){
+        std::system("/usr/bin/pfAudioManager &");
+    }).detach();
+
+    // Launch AHAL service
+    std::system("/usr/bin/pfAHAL");
 
     return 0;
 }

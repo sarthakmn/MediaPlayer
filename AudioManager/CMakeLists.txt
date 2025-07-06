@@ -12,6 +12,7 @@ set(SOURCES
 set(HEADERS
     include/AudioManager.h
     include/StateMachine.h
+    include/devghevClient.h
 )
 
 # Rename the library to avoid conflict
@@ -24,7 +25,6 @@ target_include_directories(AudioManagerLib PUBLIC
 add_executable(pfAudioManager ${SOURCES} ${HEADERS})
 target_include_directories(pfAudioManager PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${CMAKE_SOURCE_DIR}/AHAL/include
     ${CMAKE_SOURCE_DIR}/lib/devghev/include
     ${CMAKE_SOURCE_DIR}/lib/libmedia/include
     /usr/local/include/
@@ -32,9 +32,10 @@ target_include_directories(pfAudioManager PUBLIC
 
 target_link_libraries(pfAudioManager
     AudioManagerLib
-    AHAL
+    AHALlib
     devghev
     media
+    audio
     m
     pthread
     asound

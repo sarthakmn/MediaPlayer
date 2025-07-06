@@ -4,6 +4,7 @@
 #include <memory>
 #include <stdlib.h>
 #include <alsa/asoundlib.h>
+#include <audio.h>
 
 #include "wav_parser.h"
 
